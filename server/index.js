@@ -1,9 +1,19 @@
-// DB setup
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/rentaldb", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+const dotenv = require("dotenv");
+const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
+
+dotenv.config();
+const userRouter = require("./routes/auth");
+
+// DB setup
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .catch((error) => console.error(error));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -12,11 +22,7 @@ db.once("open", function () {
 });
 
 //Express setup
-var express = require("express");
-var app = express();
-const userRouter = require("./routes/auth");
-const logger = require("morgan");
-const cors = require("cors");
+const app = express();
 
 app.use(logger("dev"));
 app.use(cors());
