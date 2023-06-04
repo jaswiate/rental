@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
 const bcrypt = require("bcryptjs");
-const authConfig = require("../config/auth.config");
+
+require("dotenv").config();
+const secretKey = process.env.SECRET_KEY;
 
 checkDuplicateUsername = (req, res, next) => {
     User.findOne({
@@ -51,7 +53,7 @@ signin = (req, res) => {
     })
         .then(
             (user) => {
-                const token = jwt.sign({ id: user.id }, authConfig.secret, {
+                const token = jwt.sign({ id: user.id }, secretKey.secret, {
                     expiresIn: 86400, // 24 hours
                 });
 

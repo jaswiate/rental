@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+require("dotenv").config();
 
-dotenv.config();
 const userRouter = require("./routes/auth");
 
 // DB setup
