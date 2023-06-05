@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 import morgan from "morgan";
 import cors from "cors";
 import express, { Request, Response } from "express";

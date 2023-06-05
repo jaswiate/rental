@@ -11,7 +11,6 @@ const userSchema = new Schema<User>({
     password: { type: String, required: true },
 });
 
-//sets stores set IDs
 const User = model<User>("User", userSchema);
 
 export default User;
