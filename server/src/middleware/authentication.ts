@@ -10,27 +10,29 @@ interface tokenPayload {
     id: string;
 }
 
-const checkDuplicateUsername = (
+const checkDuplicateUsername = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    User.findOne({
-        username: req.body.username,
-    })
-        .then(
-            () => next(),
-            () => {
-                return res.status(400).send({
-                    message: "Failed! Username is already in use!",
-                });
-            }
-        )
-        .catch((err: unknown) => res.status(500).send({ message: err }));
+    try {
+        const existingUser = await User.findOne({
+            username: req.body.username,
+        });
+
+        if (existingUser) {
+            return res.status(400).send({
+                message: "Failed! Username is already in use!",
+            });
+        }
+
+        next();
+    } catch (err) {
+        res.status(500).send({ message: err });
+    }
 };
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    // let token: string = req.headers["x-access-token"];
     const token: string | undefined = req.get("x-access-token");
 
     if (!token) {
@@ -48,18 +50,19 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     } catch (error) {}
 };
 
-const signup = (req: Request, res: Response) => {
-    const user = new User({
-        username: req.body.username,
-        password: hashSync(req.body.password, 8),
-    });
-    user.save()
-        .then(() =>
-            res.send({
-                message: "User was registered successfully!",
-            })
-        )
-        .catch((err: unknown) => res.status(500).send({ message: err }));
+const signup = async (req: Request, res: Response) => {
+    try {
+        const user = new User({
+            username: req.body.username,
+            password: hashSync(req.body.password, 8),
+        });
+        await user.save();
+        res.send({
+            message: "User was registered successfully!",
+        });
+    } catch (err) {
+        res.status(500).send({ message: err });
+    }
 };
 
 const signin = async (req: Request, res: Response, next: NextFunction) => {
@@ -94,44 +97,6 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     } catch (error) {
         return res.status(500).send({ message: error });
     }
-
-    /*     User.findOne({
-        username: req.body.username,
-    })
-        .then(
-            (user) => {
-                const payload: tokenPayload = { id: user?.id };
-                const token = sign(payload, secretKey, {
-                    expiresIn: 86400, // 24 hours
-                });
-
-                res.status(200).send({
-                    id: user._id,
-                    username: user.username,
-                    accessToken: token,
-                });
-            },
-            (user, err) => {
-                if (err) {
-                    return res.status(500).send({ message: err });
-                }
-                if (!user) {
-                    return res.status(404).send({ message: "User Not found." });
-                }
-
-                const passwordIsValid = compareSync(
-                    req.body.password,
-                    user.password
-                );
-                if (!passwordIsValid) {
-                    return res.status(401).send({
-                        accessToken: null,
-                        message: "Invalid Password!",
-                    });
-                }
-            }
-        )
-        .catch((err) => res.status(500).send({ message: err })); */
 };
 
 export { checkDuplicateUsername, verifyToken, signin, signup };
