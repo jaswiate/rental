@@ -1,0 +1,3 @@
+create components
+move signup middleware to user controller or sth
+finish debugging authentication
