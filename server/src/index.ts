@@ -1,18 +1,16 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const logger = require("morgan");
-const cors = require("cors");
-require("dotenv").config();
+import mongoose from "mongoose";
+import morgan from "morgan";
+import cors from "cors";
+import express, { Request, Response } from "express";
+import * as dotenv from "dotenv";
 
-const userRouter = require("./routes/auth");
+dotenv.config();
+const mongoUrl: string = process.env.MONGO_URL!;
+
+import userRouter from "./routes/auth";
 
 // DB setup
-mongoose
-    .connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .catch((error) => console.error(error));
+mongoose.connect(mongoUrl).catch((error: unknown) => console.error(error));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -23,11 +21,11 @@ db.once("open", function () {
 //Express setup
 const app = express();
 
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
     res.send("<h1>GR GR GR</h1>");
 });
 app.use("/auth", userRouter);
