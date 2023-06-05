@@ -1,4 +1,4 @@
-import User from "../models/user";
+import { User, UserModel } from "../models/user";
 import { hashSync, compareSync } from "bcryptjs";
 import { verify, sign, Secret } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
@@ -16,7 +16,7 @@ const checkDuplicateUsername = async (
     next: NextFunction
 ) => {
     try {
-        const existingUser = await User.findOne({
+        const existingUser = await UserModel.findOne({
             username: req.body.username,
         });
 
@@ -52,7 +52,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
 const signup = async (req: Request, res: Response) => {
     try {
-        const user = new User({
+        const user = new UserModel({
             username: req.body.username,
             password: hashSync(req.body.password, 8),
         });
@@ -67,7 +67,7 @@ const signup = async (req: Request, res: Response) => {
 
 const signin = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user: User | null = await User.findOne({
+        const user: User | null = await UserModel.findOne({
             username: req.body.username,
         });
         if (!user) return res.status(404).send({ message: "User Not found." });
