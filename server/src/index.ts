@@ -8,10 +8,11 @@ import mainRouter from "./routes/mainRouter";
 import { calculateFines } from "./utils/finesUtils";
 
 dotenv.config();
-const mongoUrl: string = process.env.MONGO_URL!;
+const MONGO_URL: string = process.env.MONGO_URL!;
+const PORT = process.env.PORT || 3030;
 
 // DB setup
-mongoose.connect(mongoUrl).catch((error: unknown) => console.error(error));
+mongoose.connect(MONGO_URL).catch((error: unknown) => console.error(error));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -33,6 +34,6 @@ cron.schedule("0 0 * * *", () => {
 });
 
 // The application is to listen on port number 3000
-app.listen(3000, function () {
+app.listen(PORT, function () {
     console.log("The application is available on port 3000");
 });
