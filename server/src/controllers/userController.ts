@@ -56,3 +56,5 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
         return res.status(500).send({ message: error });
     }
 };
+
+export { signup, signin };

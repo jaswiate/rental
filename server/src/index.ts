@@ -7,7 +7,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 const mongoUrl: string = process.env.MONGO_URL!;
 
-import userRouter from "./routes/auth";
+import userRouter from "./routes/authenticationRouter";
+import productRouter from "./routes/productRouter";
 
 // DB setup
 mongoose.connect(mongoUrl).catch((error: unknown) => console.error(error));
@@ -29,6 +30,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send("<h1>GR GR GR</h1>");
 });
 app.use("/auth", userRouter);
+app.use("/product", productRouter);
 
 // The application is to listen on port number 3000
 app.listen(3000, function () {
