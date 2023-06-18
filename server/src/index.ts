@@ -3,12 +3,10 @@ import morgan from "morgan";
 import cors from "cors";
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
+import mainRouter from "./routes/mainRouter";
 
 dotenv.config();
 const mongoUrl: string = process.env.MONGO_URL!;
-
-import userRouter from "./routes/authenticationRouter";
-import productRouter from "./routes/productRouter";
 
 // DB setup
 mongoose.connect(mongoUrl).catch((error: unknown) => console.error(error));
@@ -25,12 +23,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
-
-app.get("/", (req: Request, res: Response) => {
-    res.send("<h1>GR GR GR</h1>");
-});
-app.use("/auth", userRouter);
-app.use("/product", productRouter);
+app.use("/", mainRouter);
 
 // The application is to listen on port number 3000
 app.listen(3000, function () {

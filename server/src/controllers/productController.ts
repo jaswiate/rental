@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Product, ProductModel } from "../models/product";
 
-// Get all products
 async function getAllProducts(req: Request, res: Response) {
     try {
         const products: Product[] = await ProductModel.find();
@@ -13,7 +12,6 @@ async function getAllProducts(req: Request, res: Response) {
     }
 }
 
-// Create a new product
 async function createProduct(req: Request, res: Response) {
     try {
         const { name, description, quantity, imageUrl } = req.body;
@@ -35,7 +33,6 @@ async function createProduct(req: Request, res: Response) {
     }
 }
 
-// Get a single product by ID
 async function getProductById(req: Request, res: Response) {
     try {
         const productId: string = req.params.id;
@@ -54,7 +51,6 @@ async function getProductById(req: Request, res: Response) {
     }
 }
 
-// Update a product by ID
 async function updateProduct(req: Request, res: Response) {
     try {
         const productId: string = req.params.id;
@@ -79,7 +75,6 @@ async function updateProduct(req: Request, res: Response) {
     }
 }
 
-// Delete a product by ID
 async function deleteProduct(req: Request, res: Response) {
     try {
         const productId: string = req.params.id;

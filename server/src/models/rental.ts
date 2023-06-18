@@ -1,22 +1,32 @@
-import mongoose, { Document, Schema, model } from "mongoose";
+import { Document, Schema, model } from "mongoose";
 
 interface Rental extends Document {
     _id: string;
-    clientId: string;
+    clientId: Schema.Types.ObjectId;
+    productId: Schema.Types.ObjectId;
+    quantity?: number;
     borrowDate: Date;
     dueDate: Date;
     ifProlonged?: boolean;
 }
 
-const productSchema = new Schema<Product>({
-    clientId: { type: String, required: true },
-    borrowDate: {
-        type: mongoose.Schema.Types.ObjectId,
+const rentalSchema = new Schema<Rental>({
+    clientId: {
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
+    productId: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+    },
+    quantity: { type: Number, default: 1 },
+    borrowDate: { type: Date, required: true },
+    dueDate: { type: Date, required: true },
+    ifProlonged: { type: Boolean, default: false },
 });
 
-const ProductModel = model<Product>("Product", productSchema);
+const RentalModel = model<Rental>("Rental", rentalSchema);
 
-export { Product, ProductModel };
+export { Rental, RentalModel };

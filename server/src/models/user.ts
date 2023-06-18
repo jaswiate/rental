@@ -5,7 +5,7 @@ interface User extends Document {
     username: string;
     password: string;
 }
-// moze user powinien miec inventory rzeczy ktore wypozyczyl?
+// moze user powinien miec inventory rzeczy ktore wypozyczyl? alternatywnie mozna zawsze jak wchodzimy do usera robic query d orentali
 const userSchema = new Schema<User>({
     username: { type: String, required: true },
     password: { type: String, required: true },
