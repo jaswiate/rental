@@ -1,3 +1,6 @@
-create components
-move signup middleware to user controller or sth
-finish debugging authentication
+add fines
+add rental history
+add admin feature (looking at rental stats?)
+make the routes protected
+user gets their inventory - route+controller
+cena?

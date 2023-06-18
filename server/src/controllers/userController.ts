@@ -4,6 +4,7 @@ import { compareSync, hashSync } from "bcryptjs";
 import { Secret, sign } from "jsonwebtoken";
 import { tokenPayload } from "../types/interfaces";
 import * as dotenv from "dotenv";
+import { Rental, RentalModel } from "../models/rental";
 
 dotenv.config();
 const secretKey: Secret = process.env.SECRET_KEY!;
@@ -24,16 +25,17 @@ const signup = async (req: Request, res: Response) => {
 };
 
 const signin = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, password } = req.body;
+
     try {
         const user: User | null = await UserModel.findOne({
-            username: req.body.username,
+            username: username,
         });
-        if (!user) return res.status(404).send({ message: "User Not found." });
+        if (!user) return res.status(404).json({ message: "User Not found." });
 
-        const passwordIsValid = compareSync(req.body.password, user.password);
+        const passwordIsValid = compareSync(password, user.password);
         if (!passwordIsValid) {
-            return res.status(401).send({
-                accessToken: null,
+            return res.status(401).json({
                 message: "Invalid Password!",
             });
         }
@@ -42,6 +44,12 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
             expiresIn: 86400, // 24 hours
         });
  */
+        // const token: string = sign(
+        //     { id: user._id, username: user.username, role: user.role },
+        //     "your-secret-key"
+        // );
+
+        // res.json({ token, user });
         const payload: tokenPayload = { id: user._id };
         const token = sign(payload, secretKey, {
             expiresIn: 86400, // 24 hours
@@ -57,4 +65,17 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export { signup, signin };
+async function getUserRentals(req: Request, res: Response) {
+    try {
+        const { userId } = req.body;
+        console.log(userId);
+        const rentals: Rental[] = await RentalModel.find({ clientId: userId });
+        console.log(JSON.stringify(rentals));
+        res.json(rentals);
+    } catch (error) {
+        res.status(500).json({
+            error: "An error occurred while retrieving the rental.",
+        });
+    }
+}
+export { signup, signin, getUserRentals };

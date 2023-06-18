@@ -1,5 +1,5 @@
-interface tokenPayload {
+import { NextFunction, Request } from "express";
+
+export interface tokenPayload {
     id: string;
 }
-
-export { tokenPayload };

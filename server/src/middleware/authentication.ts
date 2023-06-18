@@ -41,10 +41,23 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
             if (err) {
                 return res.status(401).send({ message: "Unauthorized!" });
             }
-            req.body.userId = (<tokenPayload>decoded).id;
+            req.body.userId = (decoded as tokenPayload).id;
             next();
         });
-    } catch (error) {}
+    } catch (error) {
+        res.status(500).send({ message: error });
+    }
 };
 
-export { checkDuplicateUsername, verifyToken };
+const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    // check if user is signed in and has the correct role
+    const { userId } = req.body;
+    const user: User | null = await UserModel.findOne({ userId });
+    if (user && user.role === "admin") {
+        next();
+    } else {
+        res.status(403).json({ message: "Unauthorized" });
+    }
+};
+
+export { checkDuplicateUsername, verifyToken, isAdmin };
