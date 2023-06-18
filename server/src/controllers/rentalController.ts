@@ -33,14 +33,7 @@ async function getRentalById(req: Request, res: Response) {
 
 async function createRental(req: Request, res: Response) {
     try {
-        const {
-            clientId,
-            productId,
-            quantity,
-            borrowDate,
-            dueDate,
-            ifProlonged,
-        } = req.body;
+        const { clientId, productId, quantity, borrowDate, dueDate } = req.body;
 
         // Check if the product has the desired quantity
         const product = await ProductModel.findById(productId);
@@ -60,7 +53,6 @@ async function createRental(req: Request, res: Response) {
             quantity,
             borrowDate,
             dueDate,
-            ifProlonged,
         });
 
         // Update the quantity of the product
@@ -86,6 +78,7 @@ async function updateRental(req: Request, res: Response) {
             quantity,
             borrowDate,
             dueDate,
+            fine,
             ifProlonged,
         } = req.body;
 
@@ -110,6 +103,7 @@ async function updateRental(req: Request, res: Response) {
                     quantity,
                     borrowDate,
                     dueDate,
+                    fine,
                     ifProlonged,
                 },
                 { new: true }

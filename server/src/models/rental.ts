@@ -7,6 +7,7 @@ interface Rental extends Document {
     quantity?: number;
     borrowDate: Date;
     dueDate: Date;
+    fine?: number;
     ifProlonged?: boolean;
 }
 
@@ -24,6 +25,7 @@ const rentalSchema = new Schema<Rental>({
     quantity: { type: Number, default: 1 },
     borrowDate: { type: Date, required: true },
     dueDate: { type: Date, required: true },
+    fine: { type: Number, default: 0 },
     ifProlonged: { type: Boolean, default: false },
 });
 
