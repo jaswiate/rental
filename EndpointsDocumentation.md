@@ -164,7 +164,6 @@
 - Metoda HTTP: POST
 - Endpoint: `/signup`
 - Dostępność: publiczne
-- Middleware: `checkDuplicateUsername` (sprawdza, czy nazwa użytkownika jest unikalna)
 - Body:
   - Content-Type: application/json
   - Parametry:
