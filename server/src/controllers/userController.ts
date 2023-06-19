@@ -58,6 +58,7 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
         res.status(200).send({
             id: user._id,
             username: user.username,
+            role: user.role,
             accessToken: token,
         });
     } catch (error) {
