@@ -9,7 +9,7 @@ Projekt na przedmiot Bazy Danych
 Wypożyczalnia książek, gier planszowych i płyt winylowych.
 
 ## Technologie:
-MongoDB, Node.js, React
+MongoDB, Node.js (TypeScript + Express), React
 
 ## Dokumentacja:
 - [Schemat Bazy](EndpointsDocumentation.md)
