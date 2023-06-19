@@ -1,7 +1,7 @@
 # Endpointy API
 
 <details>
-  <summary>/products</summary>
+  <summary><code>/products</code></summary>
   
 #### Pobierz wszystkie produkty
 
@@ -74,7 +74,7 @@
   - Body: Komunikat o pomyślnym usunięciu produktu.
 </details>
 <details>
-  <summary>/rentals</summary>
+  <summary><code>/rentals</code></summary>
   
 #### Pobierz wszystkie wypożyczenia
 
@@ -157,7 +157,7 @@
   - Body: Tablica obiekt
 </details>
 <details>
-  <summary>/user</summary>
+  <summary><code>/user</code></summary>
   
 #### Rejestracja użytkownika
 
