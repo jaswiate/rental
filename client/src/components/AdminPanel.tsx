@@ -1,6 +1,15 @@
-import { useContext, useEffect } from "react";
-import { Box, Button, Heading, List, ListItem } from "@chakra-ui/react";
+import { useContext, useEffect, useState } from "react";
+import {
+    Box,
+    Button,
+    Heading,
+    List,
+    ListItem,
+    Spinner,
+    Text,
+} from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
+import { Rental } from "../types/interfaces";
 
 export const AdminPanel: React.FC = () => {
     return <>AdminPanel</>;
@@ -58,8 +67,7 @@ const RentalList: React.FC = () => {
             ) : (
                 <List styleType="disc">
                     {rentals.map((rental) => (
-                        <ListItem key={rental._id}>{rental.name}</ListItem>
-                        // Render other rental properties here
+                        <ListItem key={rental._id}>{rental.clientId}</ListItem>
                     ))}
                 </List>
             )}
