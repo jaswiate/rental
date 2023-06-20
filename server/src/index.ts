@@ -33,7 +33,6 @@ cron.schedule("0 0 * * *", () => {
     calculateFines();
 });
 
-// The application is to listen on port number 3000
 app.listen(PORT, function () {
-    console.log("The application is available on port 3000");
+    console.log("The application is available on port " + PORT);
 });
