@@ -8,6 +8,7 @@ function calculateFine(currentDate: Date, dueDate: Date): number {
 }
 
 export async function calculateFines(): Promise<void> {
+    console.log("calculating...");
     try {
         const currentDate: Date = new Date();
 
