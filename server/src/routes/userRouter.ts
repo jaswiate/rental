@@ -10,7 +10,7 @@ router.post("/signup", checkDuplicateUsername, signup);
 
 router.post("/signin", signin);
 
-router.get("/rentals", verifyToken, getUserRentals);
+router.get("/rentals/:id", verifyToken, getUserRentals);
 
 // //check user token
 // router.get("/", verifyToken, (req: Request, res: Response) => {
