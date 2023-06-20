@@ -50,13 +50,12 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-    // check if user is signed in and has the correct role
     const { userId } = req.body;
-    const user: User | null = await UserModel.findOne({ userId });
+    const user: User | null = await UserModel.findById(userId);
     if (user && user.role === "admin") {
         next();
     } else {
-        res.status(403).json({ message: "Unauthorized" });
+        res.status(403).json({ message: "Unauthorized: no admin privileges" });
     }
 };
 

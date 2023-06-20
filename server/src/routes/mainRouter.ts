@@ -8,6 +8,6 @@ const mainRouter: Router = Router();
 
 mainRouter.use("/user", userRouter);
 mainRouter.use("/products", productRouter);
-mainRouter.use("/rentals", rentalRouter, verifyToken);
+mainRouter.use("/rentals", verifyToken, rentalRouter);
 
 export default mainRouter;
