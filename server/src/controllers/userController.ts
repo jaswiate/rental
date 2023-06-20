@@ -68,10 +68,8 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
 
 async function getUserRentals(req: Request, res: Response) {
     try {
-        const { userId } = req.body;
-        console.log(userId);
+        const userId = req.params.id;
         const rentals: Rental[] = await RentalModel.find({ clientId: userId });
-        console.log(JSON.stringify(rentals));
         res.json(rentals);
     } catch (error) {
         res.status(500).json({
