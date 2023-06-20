@@ -10,8 +10,9 @@ export interface Rental {
     clientId: string;
     productId: string;
     quantity?: number;
-    borrowDate: Date;
-    dueDate: Date;
+    isPending?: boolean;
+    borrowDate?: Date;
+    dueDate?: Date;
     fine?: number;
     ifProlonged?: boolean;
 }

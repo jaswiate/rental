@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Rental } from "../types/interfaces";
 import { AuthContext } from "../context/AuthContext";
 
-export const useFetchRentals = (relativeRoute: string) => {
+export const useFetchRentals = (relativeRoute: string, refetch?: boolean) => {
     const { user, setUser } = useContext(AuthContext);
     const [rentals, setRentals] = useState<Rental[]>([]);
     const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ export const useFetchRentals = (relativeRoute: string) => {
             }
         };
         fetchRentals();
-    }, [user, apiKey, relativeRoute]);
+    }, [user, apiKey, relativeRoute, refetch]);
 
     return { rentals, loading, error };
 };

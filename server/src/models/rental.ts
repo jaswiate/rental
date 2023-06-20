@@ -4,9 +4,10 @@ interface Rental extends Document {
     _id: string;
     clientId: Schema.Types.ObjectId;
     productId: Schema.Types.ObjectId;
-    quantity?: number;
-    borrowDate: Date;
-    dueDate: Date;
+    quantity: number;
+    isPending: boolean;
+    borrowDate?: Date;
+    dueDate?: Date;
     fine?: number;
     ifProlonged?: boolean;
 }
@@ -22,9 +23,10 @@ const rentalSchema = new Schema<Rental>({
         ref: "Product",
         required: true,
     },
-    quantity: { type: Number, default: 1 },
-    borrowDate: { type: Date, required: true },
-    dueDate: { type: Date, required: true },
+    quantity: { type: Number, required: true },
+    isPending: { type: Boolean, required: true },
+    borrowDate: { type: Date, required: false },
+    dueDate: { type: Date, required: false },
     fine: { type: Number, default: 0 },
     ifProlonged: { type: Boolean, default: false },
 });

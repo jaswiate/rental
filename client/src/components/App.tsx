@@ -7,7 +7,7 @@ import { AuthContextProvider } from "./AuthContextProvider";
 import { Signin } from "./profile/Signin";
 import { Signup } from "./profile/Signup";
 import { RequireAdmin, RequireAuth } from "./RouteProtection";
-import { AdminPanel } from "./AdminPanel";
+import { AdminPanel } from "./admin/AdminPanel";
 import { RentalForm } from "./RentalForm";
 
 function App() {

@@ -1,1 +1,5 @@
 add admin feature (looking at rental stats?)
+add pending to rental
+change duedate and borrowdate to optional - it's gonna be assigned once the rental gets accepted
+
+maybe add the option to reject rentals

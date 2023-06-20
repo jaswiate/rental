@@ -13,6 +13,17 @@ async function getAllRentals(req: Request, res: Response) {
     }
 }
 
+async function getPendingRentals(req: Request, res: Response) {
+    try {
+        const rentals: Rental[] = await RentalModel.find({ isPending: true });
+        res.json(rentals);
+    } catch (error) {
+        res.status(500).json({
+            error: "An error occurred while retrieving the pending rentals.",
+        });
+    }
+}
+
 async function getRentalById(req: Request, res: Response) {
     try {
         const rentalId: string = req.params.id;
@@ -33,7 +44,14 @@ async function getRentalById(req: Request, res: Response) {
 
 async function createRental(req: Request, res: Response) {
     try {
-        const { clientId, productId, quantity, borrowDate, dueDate } = req.body;
+        const {
+            clientId,
+            productId,
+            quantity,
+            isPending,
+            borrowDate,
+            dueDate,
+        }: Rental = req.body;
 
         // Check if the product has the desired quantity
         const product = await ProductModel.findById(productId);
@@ -51,6 +69,7 @@ async function createRental(req: Request, res: Response) {
             clientId,
             productId,
             quantity,
+            isPending,
             borrowDate,
             dueDate,
         });
@@ -63,6 +82,7 @@ async function createRental(req: Request, res: Response) {
         const savedRental: Rental = await newRental.save();
         res.status(201).json(savedRental);
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             error: "An error occurred while creating the rental.",
         });
@@ -76,13 +96,15 @@ async function updateRental(req: Request, res: Response) {
             clientId,
             productId,
             quantity,
+            isPending,
             borrowDate,
             dueDate,
             fine,
             ifProlonged,
-        } = req.body;
+        }: Rental = req.body;
 
-        // Check if the product has the desired quantity
+        // these lines aren't currently necessary, because we don't update the quantity of products when updating renttal
+        /*         // Check if the product has the desired quantity
         const product = await ProductModel.findById(productId);
         if (!product) {
             return res.status(404).json({ error: "Product not found." });
@@ -92,7 +114,7 @@ async function updateRental(req: Request, res: Response) {
             return res.status(400).json({
                 error: "Insufficient quantity available for the product.",
             });
-        }
+        } */
 
         const updatedRental: Rental | null =
             await RentalModel.findByIdAndUpdate(
@@ -101,6 +123,7 @@ async function updateRental(req: Request, res: Response) {
                     clientId,
                     productId,
                     quantity,
+                    isPending,
                     borrowDate,
                     dueDate,
                     fine,
@@ -108,15 +131,15 @@ async function updateRental(req: Request, res: Response) {
                 },
                 { new: true }
             );
-
+        console.log(updatedRental);
         if (!updatedRental) {
             return res.status(404).json({ error: "Rental not found." });
         }
-
+        /* 
         // Update the quantity of the product
         await ProductModel.findByIdAndUpdate(productId, {
             $inc: { quantity: -quantity },
-        });
+        }); */
 
         res.json(updatedRental);
     } catch (error) {
@@ -151,6 +174,7 @@ async function deleteRental(req: Request, res: Response) {
 
 export {
     getAllRentals,
+    getPendingRentals,
     createRental,
     getRentalById,
     updateRental,

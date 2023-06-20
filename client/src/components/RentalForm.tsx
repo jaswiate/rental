@@ -13,32 +13,26 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-interface RentalData {
+interface newRental {
     clientId: string;
     productId: string;
     quantity: number;
-    borrowDate: Date;
-    dueDate: Date;
+    isPending: boolean;
 }
-
-const RENTAL_DAYS_NUMBER: number = 20;
 
 // currently this form adds a rental, but ideally it would add a request of rental with address
 // alternatively we should add an address to a rental
 export const RentalForm: React.FC = () => {
     const { user } = useContext(AuthContext);
-    const currDate = new Date();
-    const dueDate = new Date();
-    dueDate.setDate(currDate.getDate() + RENTAL_DAYS_NUMBER);
+
     const { productId } = useParams();
 
     // this form should be visible only to logged in users, hence the "!" after user
-    const [rentalData, setRentalData] = useState<RentalData>({
+    const [newRental, setNewRental] = useState<newRental>({
         clientId: user!.id,
         productId: productId || "",
         quantity: 1,
-        borrowDate: currDate,
-        dueDate: dueDate,
+        isPending: true,
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -53,15 +47,16 @@ export const RentalForm: React.FC = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "x-access-token": user?.accessToken as string,
                 },
-                body: JSON.stringify(rentalData),
+                body: JSON.stringify(newRental),
             });
 
             if (response.ok) {
                 navigate("/");
             } else {
                 const errorData = await response.json();
-                setError(errorData.message);
+                setError(errorData.error);
             }
         } catch (error) {
             console.error("Failed to add rental", error);
@@ -76,10 +71,10 @@ export const RentalForm: React.FC = () => {
                         <FormLabel>Quantity</FormLabel>
                         <NumberInput
                             name="quantity"
-                            value={rentalData.quantity}
+                            value={newRental.quantity}
                             onChange={(value) =>
-                                setRentalData({
-                                    ...rentalData,
+                                setNewRental({
+                                    ...newRental,
                                     quantity: parseInt(value),
                                 })
                             }
