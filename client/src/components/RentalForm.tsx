@@ -43,11 +43,13 @@ export const RentalForm: React.FC = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const apiKey: string = process.env.REACT_APP_API_URL || "";
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             if (!productId) throw new Error("productId is empty!");
-            const response = await fetch("/rental", {
+            const response = await fetch(apiKey + "/rentals", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,6 +88,11 @@ export const RentalForm: React.FC = () => {
                             <NumberInputField />
                         </NumberInput>
                     </FormControl>
+                    {error && (
+                        <Box color="red.500" mb={4}>
+                            {error}
+                        </Box>
+                    )}
                     <Button type="submit" colorScheme="blue">
                         Add Rental
                     </Button>

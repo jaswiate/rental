@@ -1,6 +1,7 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
     Box,
+    Button,
     Collapse,
     HStack,
     List,
@@ -8,10 +9,12 @@ import {
     Text,
     useDisclosure,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 interface Product {
-    id: number;
+    _id: number;
     name: string;
     description: string;
     quantity: number;
@@ -70,7 +73,7 @@ export const ProductList: React.FC = () => {
                 <>
                     <List spacing={3} marginTop="5">
                         {displayedProducts.map((product) => (
-                            <ListItem key={product.id}>
+                            <ListItem key={product._id}>
                                 <ProductElement product={product} />
                             </ListItem>
                         ))}
@@ -106,6 +109,8 @@ interface ProductElementProps {
 
 const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
     const { isOpen, onToggle } = useDisclosure();
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     return (
         <Box
@@ -121,16 +126,7 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
             onClick={onToggle}
         >
             <HStack>
-                <Text fontSize="lg">
-                    {/* <Link>asdf</Link> */}
-                    {product.name}
-                </Text>
-                {/*                 <IconButton
-                    icon={<ChevronRightIcon />}
-                    aria-label="Youtube link"
-                    colorScheme="red"
-                    size="xs"
-                ></IconButton> */}
+                <Text fontSize="lg">{product.name}</Text>
             </HStack>
             <Collapse in={isOpen}>
                 <Box color="gray.500">
@@ -138,6 +134,27 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
                     <p>{product.description}</p>
                     <p>Quantity: {product.quantity}</p>
                     <img src={product.imageUrl} alt={product.name} />
+                    {user ? (
+                        <Button
+                            colorScheme="blue"
+                            size="sm"
+                            as={Link}
+                            to={`/new-rental/${product._id}`}
+                        >
+                            Rent
+                        </Button>
+                    ) : (
+                        <Button
+                            colorScheme="blue"
+                            size="sm"
+                            onClick={() => {
+                                alert("You need to be signed in to rent!");
+                                navigate("/signin");
+                            }}
+                        >
+                            Rent
+                        </Button>
+                    )}
                 </Box>
             </Collapse>
         </Box>
