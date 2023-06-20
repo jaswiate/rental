@@ -6,8 +6,9 @@ import { Profile } from "./profile/Profile";
 import { AuthContextProvider } from "./AuthContextProvider";
 import { Signin } from "./profile/Signin";
 import { Signup } from "./profile/Signup";
-import { RequireAuth } from "./RequireAuth";
+import { RequireAdmin, RequireAuth } from "./RouteProtection";
 import { AdminPanel } from "./AdminPanel";
+import { RentalForm } from "./RentalForm";
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                 <Container maxW="container.lg">
                     <Navbar />
                     <Routes>
-                        <Route index element={<ProductList />} />
+                        <Route index element={<ProductList />}></Route>
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/signin" element={<Signin />} />
                         <Route path="/signup" element={<Signup />} />
@@ -24,7 +25,17 @@ function App() {
                             path="/admin"
                             element={
                                 <RequireAuth>
-                                    <AdminPanel />
+                                    <RequireAdmin>
+                                        <AdminPanel />
+                                    </RequireAdmin>
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="/new-rental/:productId"
+                            element={
+                                <RequireAuth>
+                                    <RentalForm />
                                 </RequireAuth>
                             }
                         />

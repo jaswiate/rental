@@ -4,5 +4,10 @@ import { AuthContext } from "../context/AuthContext";
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
     const { user } = useContext(AuthContext);
+    return user ? children : <Navigate to="/" replace />;
+};
+
+export const RequireAdmin = ({ children }: { children: JSX.Element }) => {
+    const { user } = useContext(AuthContext);
     return user?.role === "admin" ? children : <Navigate to="/" replace />;
 };
