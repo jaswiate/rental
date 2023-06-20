@@ -11,7 +11,6 @@ export const useFetchRentals = (relativeRoute: string) => {
 
     useEffect(() => {
         const fetchRentals = async () => {
-            console.log("fetching...");
             try {
                 const response = await fetch(apiKey + relativeRoute, {
                     method: "GET",

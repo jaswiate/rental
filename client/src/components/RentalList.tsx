@@ -28,9 +28,6 @@ const RentalList: React.FC<Props> = ({ rentals, loading, error }) => {
 
     return (
         <Box>
-            <Heading as="h3" size="md" mb="4">
-                Your rentals:
-            </Heading>
             {rentals.length === 0 ? (
                 <Text>No rentals found.</Text>
             ) : (

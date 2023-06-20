@@ -16,7 +16,7 @@ function App() {
             <BrowserRouter>
                 <Container maxW="container.lg">
                     <Navbar />
-                    <Container maxW="container.lg">
+                    <Container maxW="container.lg" mt={4}>
                         <Routes>
                             <Route index element={<ProductList />}></Route>
                             <Route path="/profile" element={<Profile />} />
