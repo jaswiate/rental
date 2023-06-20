@@ -16,30 +16,32 @@ function App() {
             <BrowserRouter>
                 <Container maxW="container.lg">
                     <Navbar />
-                    <Routes>
-                        <Route index element={<ProductList />}></Route>
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/signin" element={<Signin />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route
-                            path="/admin"
-                            element={
-                                <RequireAuth>
-                                    <RequireAdmin>
-                                        <AdminPanel />
-                                    </RequireAdmin>
-                                </RequireAuth>
-                            }
-                        />
-                        <Route
-                            path="/new-rental/:productId"
-                            element={
-                                <RequireAuth>
-                                    <RentalForm />
-                                </RequireAuth>
-                            }
-                        />
-                    </Routes>
+                    <Container maxW="container.lg">
+                        <Routes>
+                            <Route index element={<ProductList />}></Route>
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/signin" element={<Signin />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route
+                                path="/admin"
+                                element={
+                                    <RequireAuth>
+                                        <RequireAdmin>
+                                            <AdminPanel />
+                                        </RequireAdmin>
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/new-rental/:productId"
+                                element={
+                                    <RequireAuth>
+                                        <RentalForm />
+                                    </RequireAuth>
+                                }
+                            />
+                        </Routes>
+                    </Container>
                 </Container>
             </BrowserRouter>
         </AuthContextProvider>
