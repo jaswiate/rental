@@ -6,9 +6,7 @@ type ListProps = {
     children: ReactNode;
 };
 
-export const AuthContextProvider: React.FC<ListProps> = ({
-    children,
-}: ListProps) => {
+export const AuthContextProvider: React.FC<ListProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
     return (

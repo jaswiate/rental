@@ -10,12 +10,14 @@ import {
     useColorModeValue,
     Button,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const Navbar: React.FC = () => {
     const { colorMode, toggleColorMode } = useColorMode();
     const bgColor = useColorModeValue("gray.100", "whiteAlpha.100");
+    const { user } = useContext(AuthContext);
 
     return (
         <Flex
@@ -28,6 +30,13 @@ export const Navbar: React.FC = () => {
             <Heading>RentalService</Heading>
             <HStack>
                 <Breadcrumb>
+                    {user?.role === "admin" && (
+                        <BreadcrumbItem>
+                            <BreadcrumbLink as={Link} to="/admin">
+                                Admin Panel
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                    )}
                     <BreadcrumbItem>
                         <BreadcrumbLink as={Link} to="/">
                             Collection
