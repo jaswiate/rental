@@ -133,7 +133,7 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
                 ></IconButton> */}
             </HStack>
             <Collapse in={isOpen}>
-                <Box color="gray.300">
+                <Box color="gray.500">
                     {" "}
                     <p>{product.description}</p>
                     <p>Quantity: {product.quantity}</p>
