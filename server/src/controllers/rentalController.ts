@@ -49,6 +49,7 @@ async function createRental(req: Request, res: Response) {
             productId,
             quantity,
             isPending,
+            address,
             borrowDate,
             dueDate,
         }: Rental = req.body;
@@ -72,6 +73,7 @@ async function createRental(req: Request, res: Response) {
             productName,
             quantity,
             isPending,
+            address,
             borrowDate,
             dueDate,
         });

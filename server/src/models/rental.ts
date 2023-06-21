@@ -7,6 +7,7 @@ interface Rental extends Document {
     productName: string;
     quantity: number;
     isPending: boolean;
+    address: { street: string; zipCode: string; city: string };
     borrowDate?: Date;
     dueDate?: Date;
     returnDate?: Date;
@@ -28,6 +29,11 @@ const rentalSchema = new Schema<Rental>({
     productName: { type: String, required: true },
     quantity: { type: Number, required: true },
     isPending: { type: Boolean, required: true },
+    address: {
+        street: { type: String, required: true },
+        zipCode: { type: String, required: true },
+        city: { type: String, required: true },
+    },
     borrowDate: { type: Date, required: false },
     dueDate: { type: Date, required: false },
     returnDate: { type: Date, required: false },

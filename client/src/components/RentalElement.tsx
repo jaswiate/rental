@@ -111,7 +111,7 @@ export const RentalElement: React.FC<RentalElementProps> = ({
                                           .substring(0, 10)
                                     : "pending shipment"}
                             </Text>
-                            <Text>
+                            <Text mr="5">
                                 TIME :{" "}
                                 {rental.dueDate
                                     ? rental?.dueDate
@@ -125,6 +125,14 @@ export const RentalElement: React.FC<RentalElementProps> = ({
                         <HStack>
                             <Text mr="10">Fine : {rental.fine}</Text>
                             <Text>Quantity : {rental.quantity}</Text>
+                        </HStack>
+                    </Flex>
+                    <Flex justify="space-evenly" align="center">
+                        <HStack>
+                            <Text mr="10">Address:</Text>
+                            <Text>Street : {rental.address.street}</Text>
+                            <Text>Zip code : {rental.address.zipCode}</Text>
+                            <Text>City : {rental.address.city}</Text>
                         </HStack>
                     </Flex>
                     {adminButtons && (

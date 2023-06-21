@@ -10,6 +10,7 @@ export interface Rental {
     clientId: string;
     productId: string;
     productName: string;
+    address: { street: string; zipCode: string; city: string };
     quantity?: number;
     isPending?: boolean;
     borrowDate?: Date;
