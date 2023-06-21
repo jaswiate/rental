@@ -9,7 +9,7 @@ Projekt na przedmiot Bazy Danych
 Aplikacja umożliwiająca zarządzanie i korzystanie z biblioteki online.
 
 ## Technologie:
-MongoDB, Node.js (TypeScript, Express), React (TypeScript, Chakra UI)
+MongoDB (MongoDB Atlas, Mongoose.js), Node.js (TypeScript, Express), React (TypeScript, Chakra UI)
 
 ## Dokumentacja:
 - [Schemat Bazy](WYP_KSIĄŻEK_Dokumentacja.pdf
