@@ -33,7 +33,7 @@ export const useFetchRentals = (relativeRoute: string) => {
             }
         };
         fetchRentals();
-    }, [user, apiKey, relativeRoute]);
+    }, [rentals, user, apiKey, relativeRoute]);
 
     return { rentals, loading, error };
 };
