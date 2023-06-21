@@ -42,6 +42,7 @@ export const RentalForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            console.log(productId);
             if (!productId) throw new Error("productId is empty!");
             const response = await fetch(apiKey + "/rentals", {
                 method: "POST",

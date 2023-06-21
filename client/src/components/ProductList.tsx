@@ -7,7 +7,13 @@ import {
     List,
     ListItem,
     Text,
-    useDisclosure, Grid, GridItem, Center, VStack, useToast, Spinner,
+    useDisclosure,
+    Grid,
+    GridItem,
+    Center,
+    VStack,
+    useToast,
+    Spinner,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
@@ -63,17 +69,22 @@ export const ProductList: React.FC = () => {
         <div>
             {displayedProducts.length === 0 ? (
                 <HStack justifyContent="center" p="10">
-                    <Spinner size='xl' thickness="4px" color="blue.100" speed="1.1s"></Spinner>
+                    <Spinner
+                        size="xl"
+                        thickness="4px"
+                        color="blue.100"
+                        speed="1.1s"
+                    ></Spinner>
                 </HStack>
             ) : (
                 <>
-                    <Grid templateColumns='repeat(3, 1fr)' gap={5} margin="5">
+                    <Grid templateColumns="repeat(3, 1fr)" gap={5} margin="5">
                         {displayedProducts.map((product) => (
                             <GridItem key={product._id}>
                                 <ProductElement product={product} />
                             </GridItem>
                         ))}
-                    </Grid>             
+                    </Grid>
                     <HStack m="5" mt="10" justifyContent="center">
                         <Button
                             onClick={previousPage}
@@ -105,7 +116,7 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
     const { isOpen, onToggle } = useDisclosure();
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const toast = useToast()
+    const toast = useToast();
 
     return (
         <Box
@@ -120,12 +131,18 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
             onClick={onToggle}
         >
             <HStack justifyContent="center">
-                <Box boxShadow="5px -5px 7px 1px"
-                     _hover={{
-                        
+                <Box
+                    boxShadow="5px -5px 7px 1px"
+                    _hover={{
                         cursor: "pointer",
-                     }}
-                ><img src={product.imageUrl} alt={product.name} width="220"/></Box>
+                    }}
+                >
+                    <img
+                        src={product.imageUrl}
+                        alt={product.name}
+                        width="220"
+                    />
+                </Box>
             </HStack>
             <Collapse in={isOpen}>
                 <Box color="white.100">
@@ -139,13 +156,14 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
                                 size="sm"
                                 onClick={() => {
                                     toast({
-                                        title: 'Okay!',
-                                        description: 'Please enter the quantity',
-                                        status: 'success',
+                                        title: "Okay!",
+                                        description:
+                                            "Please enter the quantity",
+                                        status: "success",
                                         duration: 5000,
                                         isClosable: true,
-                                    })
-                                    navigate(`/new-rental/:${product._id}`);
+                                    });
+                                    navigate(`/new-rental/${product._id}`);
                                 }}
                             >
                                 Rent
@@ -156,16 +174,17 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
                                 size="sm"
                                 onClick={() => {
                                     toast({
-                                        title: 'Error',
-                                        description: 'You need to be signed in to rent!',
-                                        status: 'error',
+                                        title: "Error",
+                                        description:
+                                            "You need to be signed in to rent!",
+                                        status: "error",
                                         duration: 5000,
                                         isClosable: true,
-                                    })
+                                    });
                                     navigate("/signin");
                                 }}
                             >
-                            Rent
+                                Rent
                             </Button>
                         )}
                     </VStack>
