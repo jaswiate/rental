@@ -90,6 +90,7 @@ interface RentalElementProps {
 
 const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
     const { isOpen, onToggle } = useDisclosure();
+    const { user } = useContext(AuthContext);
 
     return (
         <Box
@@ -105,7 +106,7 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
             }}
             onClick={onToggle}
         >
-            <Text>{rental.clientId}</Text>
+            <Text>{rental.productName}</Text>
             <Collapse in={isOpen}>
                 <Flex justify="space-evenly" align="center" mb="2">
                     <HStack>
@@ -114,13 +115,13 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
                             DAY :{" "}
                             {rental.borrowDate
                                 ? rental.borrowDate.toString().substring(0, 10)
-                                : "czeka na wysyłkę"}
+                                : "pending shipment"}
                         </Text>
                         <Text>
                             TIME :{" "}
                             {rental.borrowDate
                                 ? rental.borrowDate.toString().substring(11, 19)
-                                : "czeka na wysyłkę"}
+                                : "pending shipment"}
                         </Text>
                     </HStack>
                     <HStack>
@@ -129,13 +130,13 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
                             DAY :{" "}
                             {rental.dueDate
                                 ? rental?.dueDate.toString().substring(0, 10)
-                                : "czeka na wysyłkę"}
+                                : "pending shipment"}
                         </Text>
                         <Text>
                             TIME :{" "}
                             {rental.dueDate
                                 ? rental?.dueDate.toString().substring(11, 19)
-                                : "czeka na wysyłkę"}
+                                : "pending shipment"}
                         </Text>
                     </HStack>
                 </Flex>
@@ -143,15 +144,19 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
                     <HStack>
                         <Text mr="10">Fine : {rental.fine}</Text>
                         <Text>Quantity : {rental.quantity}</Text>
-                        <Text>Borrowed by : {rental.clientId}</Text>
                     </HStack>
                 </Flex>
-                <Flex justify="space-evenly">
-                    <HStack>
-                        <Text mr="5">Rented Product: {rental.productId}</Text>
-                        {/* <Button as={Link} to={`/products/:${rental.productId}`}>GoTo Product</Button> */}
-                    </HStack>
-                </Flex>
+                {user!.role === "admin" && (
+                    <Flex justify="space-evenly">
+                        <HStack>
+                            <Text>Borrower's Id : {rental.clientId}</Text>
+                            <Text mr="5">
+                                Rented product Id: {rental.productId}
+                            </Text>
+                            {/* <Button as={Link} to={`/products/:${rental.productId}`}>GoTo Product</Button> */}
+                        </HStack>
+                    </Flex>
+                )}
             </Collapse>
         </Box>
     );

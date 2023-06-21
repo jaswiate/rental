@@ -65,9 +65,11 @@ async function createRental(req: Request, res: Response) {
             });
         }
 
+        const productName = product.name;
         const newRental: Rental = new RentalModel({
             clientId,
             productId,
+            productName,
             quantity,
             isPending,
             borrowDate,
@@ -89,45 +91,19 @@ async function createRental(req: Request, res: Response) {
     }
 }
 
+// this version only updates the fields we update during confirming shipment
 async function updateRental(req: Request, res: Response) {
     try {
         const rentalId: string = req.params.id;
-        const {
-            clientId,
-            productId,
-            quantity,
-            isPending,
-            borrowDate,
-            dueDate,
-            fine,
-            ifProlonged,
-        }: Rental = req.body;
-
-        // these lines aren't currently necessary, because we don't update the quantity of products when updating renttal
-        /*         // Check if the product has the desired quantity
-        const product = await ProductModel.findById(productId);
-        if (!product) {
-            return res.status(404).json({ error: "Product not found." });
-        }
-
-        if (product.quantity < quantity) {
-            return res.status(400).json({
-                error: "Insufficient quantity available for the product.",
-            });
-        } */
+        const { isPending, borrowDate, dueDate }: Rental = req.body;
 
         const updatedRental: Rental | null =
             await RentalModel.findByIdAndUpdate(
                 rentalId,
                 {
-                    clientId,
-                    productId,
-                    quantity,
                     isPending,
                     borrowDate,
                     dueDate,
-                    fine,
-                    ifProlonged,
                 },
                 { new: true }
             );
@@ -135,11 +111,6 @@ async function updateRental(req: Request, res: Response) {
         if (!updatedRental) {
             return res.status(404).json({ error: "Rental not found." });
         }
-        /* 
-        // Update the quantity of the product
-        await ProductModel.findByIdAndUpdate(productId, {
-            $inc: { quantity: -quantity },
-        }); */
 
         res.json(updatedRental);
     } catch (error) {
@@ -148,6 +119,66 @@ async function updateRental(req: Request, res: Response) {
         });
     }
 }
+// async function updateRental(req: Request, res: Response) {
+//     try {
+//         const rentalId: string = req.params.id;
+//         const {
+//             clientId,
+//             productId,
+//             quantity,
+//             isPending,
+//             borrowDate,
+//             dueDate,
+//             fine,
+//             ifProlonged,
+//         }: Rental = req.body;
+
+//         // these lines aren't currently necessary, because we don't update the quantity of products when updating renttal
+//         // we also don't change the product name using this route for now
+//         /*         // Check if the product has the desired quantity
+//         const product = await ProductModel.findById(productId);
+//         if (!product) {
+//             return res.status(404).json({ error: "Product not found." });
+//         }
+
+//         if (product.quantity < quantity) {
+//             return res.status(400).json({
+//                 error: "Insufficient quantity available for the product.",
+//             });
+//         } */
+
+//         const updatedRental: Rental | null =
+//             await RentalModel.findByIdAndUpdate(
+//                 rentalId,
+//                 {
+//                     clientId,
+//                     productId,
+//                     quantity,
+//                     isPending,
+//                     borrowDate,
+//                     dueDate,
+//                     fine,
+//                     ifProlonged,
+//                 },
+//                 { new: true }
+//             );
+//         console.log(updatedRental);
+//         if (!updatedRental) {
+//             return res.status(404).json({ error: "Rental not found." });
+//         }
+//         /*
+//         // Update the quantity of the product
+//         await ProductModel.findByIdAndUpdate(productId, {
+//             $inc: { quantity: -quantity },
+//         }); */
+
+//         res.json(updatedRental);
+//     } catch (error) {
+//         res.status(500).json({
+//             error: "An error occurred while updating the rental.",
+//         });
+//     }
+// }
 
 async function deleteRental(req: Request, res: Response) {
     try {
