@@ -45,7 +45,7 @@ export const Signin: React.FC = () => {
     };
 
     return (
-        <Box maxWidth="400px" mx="auto" mt={8} p={4}>
+        <Box maxWidth="600px" mx="auto" mt={8} p="110" pt={4} borderBottom="2px" borderRadius={50}>
             <Heading mb={4}>Login</Heading>
             {error && (
                 <Box color="red.500" mb={4}>
@@ -70,7 +70,7 @@ export const Signin: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </FormControl>
-            <Button colorScheme="blue" onClick={handleLogin}>
+            <Button colorScheme="blue" onClick={handleLogin} mr="7" ml="10">
                 Login
             </Button>
             not a member?{" "}

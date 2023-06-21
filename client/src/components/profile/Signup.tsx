@@ -39,7 +39,7 @@ export const Signup: React.FC = () => {
     };
 
     return (
-        <Box maxWidth="400px" mx="auto" mt={8} p={4}>
+        <Box maxWidth="600px" mx="auto" mt={8} p="110" pt={4} borderBottom="2px" borderRadius={50}>
             <Heading mb={4}>Sign Up</Heading>
             {error && (
                 <Box color="red.500" mb={4}>

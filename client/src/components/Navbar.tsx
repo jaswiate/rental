@@ -16,7 +16,7 @@ import { AuthContext } from "../context/AuthContext";
 
 export const Navbar: React.FC = () => {
     const { colorMode, toggleColorMode } = useColorMode();
-    const bgColor = useColorModeValue("gray.100", "whiteAlpha.100");
+    const bgColor = useColorModeValue("blue.100", "whiteAlpha.100");
     const { user } = useContext(AuthContext);
 
     return (
@@ -25,11 +25,15 @@ export const Navbar: React.FC = () => {
             align="center"
             bg={bgColor}
             p="5"
-            fontSize="2xl"
+            fontSize="20"
+            borderRadius={30}
         >
-            <Heading>RentalService</Heading>
-            <HStack>
-                <Breadcrumb>
+            <HStack ml="6">
+                <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/04/Bookshelf_JE2_BE1.png" alt="logo" width="50"/>
+                <Heading ml="3">For Rent</Heading>
+            </HStack>
+            <Flex align="center">
+                <Breadcrumb mr="10">
                     {user?.role === "admin" && (
                         <BreadcrumbItem>
                             <BreadcrumbLink as={Link} to="/admin">
@@ -51,7 +55,7 @@ export const Navbar: React.FC = () => {
                 <Button onClick={toggleColorMode}>
                     {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 </Button>
-            </HStack>
+            </Flex>
         </Flex>
     );
 };

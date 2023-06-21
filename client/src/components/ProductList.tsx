@@ -7,21 +7,15 @@ import {
     List,
     ListItem,
     Text,
-    useDisclosure,
+    useDisclosure, Grid, GridItem, Center, VStack, useToast, Spinner,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { Product } from "../types/interfaces";
+import { RequireAuth } from "./RouteProtection";
 
-interface Product {
-    _id: number;
-    name: string;
-    description: string;
-    quantity: number;
-    imageUrl: string;
-}
-
-const productsPerPage = 10;
+const productsPerPage = 9;
 
 export const ProductList: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -68,35 +62,35 @@ export const ProductList: React.FC = () => {
     return (
         <div>
             {displayedProducts.length === 0 ? (
-                <p>Loading products...</p>
+                <HStack justifyContent="center" p="10">
+                    <Spinner size='xl' thickness="4px" color="blue.100" speed="1.1s"></Spinner>
+                </HStack>
             ) : (
                 <>
-                    <List spacing={3} marginTop="5">
+                    <Grid templateColumns='repeat(3, 1fr)' gap={5} margin="5">
                         {displayedProducts.map((product) => (
-                            <ListItem key={product._id}>
+                            <GridItem key={product._id}>
                                 <ProductElement product={product} />
-                            </ListItem>
+                            </GridItem>
                         ))}
-                    </List>
-                    {displayedProducts.length >= productsPerPage && (
-                        <div>
-                            <button
-                                onClick={previousPage}
-                                disabled={currentPage === 1}
-                            >
-                                Poprzednia strona
-                            </button>
-                            <span>
-                                {currentPage}/{totalPages}
-                            </span>
-                            <button
-                                onClick={nextPage}
-                                disabled={currentPage === totalPages}
-                            >
-                                Następna strona
-                            </button>
-                        </div>
-                    )}
+                    </Grid>             
+                    <HStack m="5" mt="10" justifyContent="center">
+                        <Button
+                            onClick={previousPage}
+                            disabled={currentPage === 1}
+                        >
+                            Poprzednia strona
+                        </Button>
+                        <span>
+                            {currentPage}/{totalPages}
+                        </span>
+                        <Button
+                            onClick={nextPage}
+                            disabled={currentPage === totalPages}
+                        >
+                            Następna strona
+                        </Button>
+                    </HStack>
                 </>
             )}
         </div>
@@ -111,50 +105,70 @@ const ProductElement: React.FC<ProductElementProps> = ({ product }) => {
     const { isOpen, onToggle } = useDisclosure();
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const toast = useToast()
 
     return (
         <Box
-            borderBottom="1px"
-            borderColor="gray.200"
-            borderRadius="base"
-            padding="1"
-            _hover={{
-                border: "1px",
-                borderColor: "gray.200",
-                cursor: "pointer",
-            }}
+            borderBottom="2px"
+            borderRadius="50"
+            padding="3"
+            // _hover={{
+            //     border: "2px",
+            //     cursor: "pointer",
+            //     borderRadius: "50",
+            // }}
             onClick={onToggle}
         >
-            <HStack>
-                <Text fontSize="lg">{product.name}</Text>
+            <HStack justifyContent="center">
+                <Box boxShadow="5px -5px 7px 1px"
+                     _hover={{
+                        
+                        cursor: "pointer",
+                     }}
+                ><img src={product.imageUrl} alt={product.name} width="220"/></Box>
             </HStack>
             <Collapse in={isOpen}>
-                <Box color="gray.500">
-                    {" "}
-                    <p>{product.description}</p>
-                    <p>Quantity: {product.quantity}</p>
-                    <img src={product.imageUrl} alt={product.name} />
-                    {user ? (
-                        <Button
-                            colorScheme="blue"
-                            size="sm"
-                            as={Link}
-                            to={`/new-rental/${product._id}`}
-                        >
+                <Box color="white.100">
+                    <VStack>
+                        <Text fontSize="lg">{product.name}</Text>
+                        <p>{product.description}</p>
+                        <p>Quantity: {product.quantity}</p>
+                        {user ? (
+                            <Button
+                                colorScheme="blue"
+                                size="sm"
+                                onClick={() => {
+                                    toast({
+                                        title: 'Okay!',
+                                        description: 'Please enter the quantity',
+                                        status: 'success',
+                                        duration: 5000,
+                                        isClosable: true,
+                                    })
+                                    navigate(`/new-rental/:${product._id}`);
+                                }}
+                            >
+                                Rent
+                            </Button>
+                        ) : (
+                            <Button
+                                colorScheme="blue"
+                                size="sm"
+                                onClick={() => {
+                                    toast({
+                                        title: 'Error',
+                                        description: 'You need to be signed in to rent!',
+                                        status: 'error',
+                                        duration: 5000,
+                                        isClosable: true,
+                                    })
+                                    navigate("/signin");
+                                }}
+                            >
                             Rent
-                        </Button>
-                    ) : (
-                        <Button
-                            colorScheme="blue"
-                            size="sm"
-                            onClick={() => {
-                                alert("You need to be signed in to rent!");
-                                navigate("/signin");
-                            }}
-                        >
-                            Rent
-                        </Button>
-                    )}
+                            </Button>
+                        )}
+                    </VStack>
                 </Box>
             </Collapse>
         </Box>

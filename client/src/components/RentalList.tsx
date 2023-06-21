@@ -47,14 +47,14 @@ const RentalList: React.FC<Props> = ({
     }
     console.log();
     return (
-        <Box>
+        <Box mt="5" mb="10">
             {rentals.length === 0 ? (
                 <Text>No rentals found.</Text>
             ) : (
                 <List styleType="disc">
                     {rentals.map((rental) => (
                         <ListItem key={rental._id}>
-                            {JSON.stringify(rental)}
+                            <RentalElement rental={rental} />
                             {adminButtons &&
                                 (adminButtons.loading ? (
                                     <Text>
@@ -79,5 +79,62 @@ const RentalList: React.FC<Props> = ({
         </Box>
     );
 };
+
+interface RentalElementProps {
+    rental: Rental;
+}
+
+const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
+    const { isOpen, onToggle } = useDisclosure();
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    return (
+        <Box  
+            mt="3"
+            borderBottom="1px"
+            borderColor="gray.200"
+            borderRadius="base"
+            padding="1"
+            _hover={{
+                border: "1px",
+                borderColor: "gray.200",
+                cursor: "pointer",
+            }}
+            onClick={onToggle}
+        >
+            <Text>{rental.clientId}</Text>
+            <Collapse in={isOpen}>
+                <Flex justify="space-evenly" align="center" mb="2">
+                    <HStack>
+                        <Text mr="5">BorrowDate : </Text>
+                        <Text mr="5">DAY : {rental.borrowDate.toString().substring(0, 10)}</Text>
+                        <Text>TIME : {rental.borrowDate.toString().substring(11, 19)}</Text>
+                    </HStack>
+                    <HStack>
+                        <Text mr="5">DueDate : </Text>
+                        <Text mr="5">DAY : {rental.dueDate.toString().substring(0, 10)}</Text>
+                        <Text>TIME : {rental.dueDate.toString().substring(11, 19)}</Text>
+                    </HStack>
+                </Flex>
+                <Flex justify="space-evenly" align="center">
+                    <HStack>
+                        <Text mr="10">Fine : {rental.fine}</Text>
+                        <Text>Quantity : {rental.quantity}</Text>
+                        <Text>Borrowed by : {rental.clientId}</Text>
+                    </HStack>
+                </Flex>
+                <Flex justify="space-evenly">
+                    <HStack>
+                        <Text mr="5">Rented Product: {rental.productId}</Text>
+                        {/* <Button as={Link} to={`/products/:${rental.productId}`}>GoTo Product</Button> */}
+                    </HStack>
+                </Flex>
+            </Collapse>
+
+        </Box>
+    )
+}
+
 
 export default RentalList;

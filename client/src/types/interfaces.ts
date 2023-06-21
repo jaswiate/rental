@@ -16,3 +16,11 @@ export interface Rental {
     fine?: number;
     ifProlonged?: boolean;
 }
+
+export interface Product {
+    _id: string;
+    name: string;
+    description: string;
+    quantity: number;
+    imageUrl: string;
+}
