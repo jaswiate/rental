@@ -17,8 +17,7 @@ import { timeout } from "../utils/timeout";
 import { PendingRentals } from "./PendingRentals";
 
 export const AdminPanel: React.FC = () => {
-    const [update, setUpdate] = useState<boolean>(false);
-    const { rentals, loading, error } = useFetchRentals("/rentals", update);
+    const { rentals, loading, error } = useFetchRentals("/rentals");
     const apiKey: string = process.env.REACT_APP_API_URL || "";
     const { user } = useContext(AuthContext);
     const [finesLoading, setFinesLoading] = useState<boolean>(false);
