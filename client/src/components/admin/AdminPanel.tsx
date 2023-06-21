@@ -46,6 +46,10 @@ export const AdminPanel: React.FC = () => {
         setResultMessage("");
     };
 
+    // const pendingRentals = rentals.filter((rental) => {
+    //     if (rental?.isPending) return rental;
+    // });
+
     return (
         <Box>
             <Box>
@@ -60,7 +64,13 @@ export const AdminPanel: React.FC = () => {
                     <Text>{resultMessage}</Text>
                 )}
             </Box>
-            <PendingRentals />
+            <PendingRentals
+                rentals={rentals.filter((rental) => {
+                    if (rental?.isPending) return rental;
+                })}
+                loading={loading}
+                error={error}
+            />
             <Heading as="h3" size="md" mb="4">
                 All Rentals
             </Heading>

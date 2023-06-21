@@ -16,13 +16,23 @@ import { useFetchRentals } from "../../hooks/useFetchRentals";
 import RentalList from "../RentalList";
 import { RENTAL_DAYS_NUMBER } from "../utils/constants";
 
-export const PendingRentals: React.FC = () => {
+interface Props {
+    rentals: Rental[];
+    loading: boolean;
+    error: string;
+}
+
+export const PendingRentals: React.FC<Props> = ({
+    rentals,
+    loading,
+    error,
+}) => {
     const apiKey: string = process.env.REACT_APP_API_URL || "";
-    const {
-        rentals: pendingRentals,
-        loading: pendingLoading,
-        error: pendingError,
-    } = useFetchRentals("/rentals/pending");
+    // const {
+    //     rentals: pendingRentals,
+    //     loading: pendingLoading,
+    //     error: pendingError,
+    // } = useFetchRentals("/rentals/pending");
     const [updateLoading, setUpdateLoading] = useState(false);
     const [updateError, setUpdateError] = useState("");
     const currDate = new Date();
@@ -65,9 +75,9 @@ export const PendingRentals: React.FC = () => {
                 Rentals pending shipment
             </Heading>
             <RentalList
-                rentals={pendingRentals}
-                loading={pendingLoading}
-                error={pendingError}
+                rentals={rentals}
+                loading={loading}
+                error={error}
                 adminButtons={{
                     loading: updateLoading,
                     error: updateError,
