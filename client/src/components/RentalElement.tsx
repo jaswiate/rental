@@ -169,7 +169,7 @@ export const RentalElement: React.FC<RentalElementProps> = ({
                         {rental.fine && (
                             <Button
                                 colorScheme="red"
-                                onClick={() => handleUpdate({ fines: 0 })}
+                                onClick={() => handleUpdate({ fine: 0 })}
                             >
                                 pay fines
                             </Button>
