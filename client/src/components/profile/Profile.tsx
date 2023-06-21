@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
-import RentalList from "../RentalList";
+import { RentalList } from "../RentalList";
 import { Rental } from "../../types/interfaces";
 import { useFetchRentals } from "../../hooks/useFetchRentals";
 

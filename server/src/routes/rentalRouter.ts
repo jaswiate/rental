@@ -16,7 +16,7 @@ router.get("/fines", isAdmin, finesMiddleware);
 router.get("/pending", isAdmin, getPendingRentals);
 router.get("/:id", isAdmin, getRentalById);
 router.post("/", createRental);
-router.put("/:id", isAdmin, updateRental);
+router.put("/:id", updateRental);
 router.delete("/:id", isAdmin, deleteRental);
 
 export default router;
