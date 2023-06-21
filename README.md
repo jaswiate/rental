@@ -6,7 +6,7 @@ Projekt na przedmiot Bazy Danych
 - Kuba Świątek (jgswiatek@student.agh.edu.pl)
 
 ## Opis projektu: 
-Aplikacja umożliwiająca zarządanie i korzystanie z biblioteki online.
+Aplikacja umożliwiająca zarządzanie i korzystanie z biblioteki online.
 
 ## Technologie:
 MongoDB, Node.js (TypeScript, Express), React (TypeScript, Chakra UI)
