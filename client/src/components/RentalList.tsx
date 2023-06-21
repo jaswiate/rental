@@ -71,7 +71,7 @@ const RentalList: React.FC<Props> = ({
                                                 adminButtons.onclick(rental)
                                             }
                                         >
-                                            Potwierdź wysyłkę
+                                            Confirm shipment
                                         </Button>
                                         {adminButtons?.error}
                                     </>

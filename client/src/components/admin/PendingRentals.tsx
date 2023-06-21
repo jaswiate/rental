@@ -16,12 +16,7 @@ import { useFetchRentals } from "../../hooks/useFetchRentals";
 import RentalList from "../RentalList";
 import { RENTAL_DAYS_NUMBER } from "../utils/constants";
 
-interface Props {
-    update: boolean;
-    setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const PendingRentals: React.FC<Props> = ({ update, setUpdate }) => {
+export const PendingRentals: React.FC = () => {
     const apiKey: string = process.env.REACT_APP_API_URL || "";
     const {
         rentals: pendingRentals,
@@ -52,7 +47,7 @@ export const PendingRentals: React.FC<Props> = ({ update, setUpdate }) => {
             });
 
             if (response.ok) {
-                setUpdate(true);
+                // set rentals to []?
             } else {
                 setUpdateError("An error occurred while updating the rental.");
             }
@@ -67,7 +62,7 @@ export const PendingRentals: React.FC<Props> = ({ update, setUpdate }) => {
     return (
         <Box>
             <Heading as="h3" size="md" mb="4">
-                Wypożyczenia czekające na wysyłkę
+                Rentals pending shipment
             </Heading>
             <RentalList
                 rentals={pendingRentals}

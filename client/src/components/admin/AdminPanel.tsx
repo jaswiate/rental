@@ -51,7 +51,7 @@ export const AdminPanel: React.FC = () => {
         <Box>
             <Box>
                 <Button onClick={requestRecalculation} colorScheme="red">
-                    recalculate all fines
+                    Recalculate all fines
                 </Button>
                 {finesLoading ? (
                     <Text>
@@ -61,16 +61,7 @@ export const AdminPanel: React.FC = () => {
                     <Text>{resultMessage}</Text>
                 )}
             </Box>
-            {/* <Heading as="h3" size="md" mb="4">
-                Wypożyczenia czekające na wysyłkę
-            </Heading>
-            <RentalList
-                rentals={pendingRentals}
-                loading={pendingRentalsLoading}
-                error={pendingRentalsError}
-                adminButtons={true}
-            /> */}
-            <PendingRentals update={update} setUpdate={setUpdate} />
+            <PendingRentals />
             <Heading as="h3" size="md" mb="4">
                 All Rentals
             </Heading>
