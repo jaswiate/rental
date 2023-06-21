@@ -52,7 +52,7 @@ async function createRental(req: Request, res: Response) {
             borrowDate,
             dueDate,
         }: Rental = req.body;
-        console.log(productId);
+
         // Check if the product has the desired quantity
         const product = await ProductModel.findById(productId);
         if (!product) {
