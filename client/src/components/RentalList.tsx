@@ -26,6 +26,7 @@ interface Props {
         loading: boolean;
         error: string;
         onclick: (rental: Rental) => Promise<void>;
+        text: string;
     };
 }
 

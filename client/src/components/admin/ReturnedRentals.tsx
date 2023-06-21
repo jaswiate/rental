@@ -8,7 +8,7 @@ import {
     Spinner,
     Text,
 } from "@chakra-ui/react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Rental } from "../../types/interfaces";
 import { timeout } from "../utils/timeout";
@@ -22,7 +22,7 @@ interface Props {
     error: string;
 }
 
-export const PendingRentals: React.FC<Props> = ({
+export const ReturnedRentals: React.FC<Props> = ({
     rentals,
     loading,
     error,
@@ -40,29 +40,24 @@ export const PendingRentals: React.FC<Props> = ({
     dueDate.setDate(currDate.getDate() + RENTAL_DAYS_NUMBER);
     const { user } = useContext(AuthContext);
 
-    const handleUpdate = async (rental: Rental) => {
+    const handleDelete = async (rental: Rental) => {
         setUpdateLoading(true);
         try {
             const response = await fetch(`${apiKey}/rentals/${rental._id}`, {
-                method: "PUT",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     "x-access-token": user?.accessToken as string,
                 },
-                body: JSON.stringify({
-                    borrowDate: currDate,
-                    dueDate: dueDate,
-                    isPending: false,
-                }),
             });
 
             if (response.ok) {
                 // set rentals to []?
             } else {
-                setUpdateError("An error occurred while updating the rental.");
+                setUpdateError("An error occurred while deleting the rental.");
             }
         } catch (error) {
-            setUpdateError("An error occurred while updating the rental.");
+            setUpdateError("An error occurred while deleting the rental.");
         }
         setUpdateLoading(false);
         timeout(5000);
@@ -72,7 +67,7 @@ export const PendingRentals: React.FC<Props> = ({
     return (
         <Box>
             <Heading as="h3" size="md" mb="4">
-                Rentals pending shipment
+                Rentals pending return confirmation
             </Heading>
             <RentalList
                 rentals={rentals}
@@ -81,8 +76,8 @@ export const PendingRentals: React.FC<Props> = ({
                 adminButtons={{
                     loading: updateLoading,
                     error: updateError,
-                    onclick: handleUpdate,
-                    text: "Confirm shipment",
+                    onclick: handleDelete,
+                    text: "Confirm received return",
                 }}
             />
         </Box>

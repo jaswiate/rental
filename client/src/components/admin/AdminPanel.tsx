@@ -15,6 +15,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useFetchRentals } from "../../hooks/useFetchRentals";
 import { timeout } from "../utils/timeout";
 import { PendingRentals } from "./PendingRentals";
+import { ReturnedRentals } from "./ReturnedRentals";
 
 export const AdminPanel: React.FC = () => {
     const { rentals, loading, error } = useFetchRentals("/rentals");
@@ -66,7 +67,14 @@ export const AdminPanel: React.FC = () => {
             </Box>
             <PendingRentals
                 rentals={rentals.filter((rental) => {
-                    if (rental?.isPending) return rental;
+                    if (rental?.isPending && !rental.dueDate) return rental;
+                })}
+                loading={loading}
+                error={error}
+            />
+            <ReturnedRentals
+                rentals={rentals.filter((rental) => {
+                    if (rental?.isPending && rental.dueDate) return rental;
                 })}
                 loading={loading}
                 error={error}
