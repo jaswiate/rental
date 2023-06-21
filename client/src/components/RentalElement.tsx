@@ -163,7 +163,7 @@ export const RentalElement: React.FC<RentalElementProps> = ({
                         </>
                     ))}
             </Box>
-            {!adminButtons && isOpen && (
+            {!adminButtons && isOpen && !rental.isPending && (
                 <Flex justify="space-evenly" align="center">
                     <HStack>
                         {rental.fine && (
