@@ -95,7 +95,7 @@ async function createRental(req: Request, res: Response) {
 async function updateRental(req: Request, res: Response) {
     try {
         const rentalId: string = req.params.id;
-        const { isPending, borrowDate, dueDate }: Rental = req.body;
+        const { isPending, borrowDate, dueDate, returnDate }: Rental = req.body;
 
         const updatedRental: Rental | null =
             await RentalModel.findByIdAndUpdate(
@@ -104,6 +104,7 @@ async function updateRental(req: Request, res: Response) {
                     isPending,
                     borrowDate,
                     dueDate,
+                    returnDate,
                 },
                 { new: true }
             );

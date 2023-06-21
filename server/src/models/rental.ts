@@ -9,6 +9,7 @@ interface Rental extends Document {
     isPending: boolean;
     borrowDate?: Date;
     dueDate?: Date;
+    returnDate?: Date;
     fine?: number;
     ifProlonged?: boolean;
 }
@@ -29,6 +30,7 @@ const rentalSchema = new Schema<Rental>({
     isPending: { type: Boolean, required: true },
     borrowDate: { type: Date, required: false },
     dueDate: { type: Date, required: false },
+    returnDate: { type: Date, required: false },
     fine: { type: Number, default: 0 },
     ifProlonged: { type: Boolean, default: false },
 });
