@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import {
     Box,
     Button,
+    Collapse,
+    Flex,
+    HStack,
     Heading,
     List,
     ListItem,
     Spinner,
     Text,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { AuthContext } from "../context/AuthContext";
 import { Rental } from "../types/interfaces";
@@ -86,11 +90,9 @@ interface RentalElementProps {
 
 const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
     const { isOpen, onToggle } = useDisclosure();
-    const { user } = useContext(AuthContext);
-    const navigate = useNavigate();
-    
+
     return (
-        <Box  
+        <Box
             mt="3"
             borderBottom="1px"
             borderColor="gray.200"
@@ -108,13 +110,33 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
                 <Flex justify="space-evenly" align="center" mb="2">
                     <HStack>
                         <Text mr="5">BorrowDate : </Text>
-                        <Text mr="5">DAY : {rental.borrowDate.toString().substring(0, 10)}</Text>
-                        <Text>TIME : {rental.borrowDate.toString().substring(11, 19)}</Text>
+                        <Text mr="5">
+                            DAY :{" "}
+                            {rental.borrowDate
+                                ? rental.borrowDate.toString().substring(0, 10)
+                                : "czeka na wysyłkę"}
+                        </Text>
+                        <Text>
+                            TIME :{" "}
+                            {rental.borrowDate
+                                ? rental.borrowDate.toString().substring(11, 19)
+                                : "czeka na wysyłkę"}
+                        </Text>
                     </HStack>
                     <HStack>
                         <Text mr="5">DueDate : </Text>
-                        <Text mr="5">DAY : {rental.dueDate.toString().substring(0, 10)}</Text>
-                        <Text>TIME : {rental.dueDate.toString().substring(11, 19)}</Text>
+                        <Text mr="5">
+                            DAY :{" "}
+                            {rental.dueDate
+                                ? rental?.dueDate.toString().substring(0, 10)
+                                : "czeka na wysyłkę"}
+                        </Text>
+                        <Text>
+                            TIME :{" "}
+                            {rental.dueDate
+                                ? rental?.dueDate.toString().substring(11, 19)
+                                : "czeka na wysyłkę"}
+                        </Text>
                     </HStack>
                 </Flex>
                 <Flex justify="space-evenly" align="center">
@@ -131,10 +153,8 @@ const RentalElement: React.FC<RentalElementProps> = ({ rental }) => {
                     </HStack>
                 </Flex>
             </Collapse>
-
         </Box>
-    )
-}
-
+    );
+};
 
 export default RentalList;

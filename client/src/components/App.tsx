@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, useColorModeValue } from "@chakra-ui/react";
 import { Navbar } from "./Navbar";
 import { ProductList } from "./ProductList";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -18,7 +18,15 @@ function App() {
         <AuthContextProvider>
             <BrowserRouter>
                 <html>
-                    <Container maxW="72vw" borderLeft="2px" borderRight="2px" borderColor="blue.100" borderRadius={30} bg={bgColor} pb="5">
+                    <Container
+                        maxW="72vw"
+                        borderLeft="2px"
+                        borderRight="2px"
+                        borderColor="blue.100"
+                        borderRadius={30}
+                        bg={bgColor}
+                        pb="5"
+                    >
                         <Navbar />
                         <Container maxW="68vw">
                             <Routes>
