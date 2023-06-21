@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import { Rental } from "../../types/interfaces";
-import RentalList from "../RentalList";
+import { RentalList } from "../RentalList";
 import { AuthContext } from "../../context/AuthContext";
 import { useFetchRentals } from "../../hooks/useFetchRentals";
 import { timeout } from "../utils/timeout";

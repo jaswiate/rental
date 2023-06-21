@@ -13,7 +13,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Rental } from "../../types/interfaces";
 import { timeout } from "../utils/timeout";
 import { useFetchRentals } from "../../hooks/useFetchRentals";
-import RentalList from "../RentalList";
+import { RentalList } from "../RentalList";
 import { RENTAL_DAYS_NUMBER } from "../utils/constants";
 
 interface Props {
