@@ -7,7 +7,7 @@ function daysBetween(earlierDate: Date, laterDate: Date): number {
 function calculateFine(currentDate: Date, dueDate: Date): number {
     const dailyFine = 0.2;
     const overdueDays = daysBetween(currentDate, dueDate);
-    return dailyFine * overdueDays;
+    return Math.round(dailyFine * overdueDays);
 }
 
 export async function calculateFines(): Promise<void> {
@@ -15,10 +15,7 @@ export async function calculateFines(): Promise<void> {
     try {
         const currentDate: Date = new Date();
 
-        const overdueRentals: Rental[] = await RentalModel.find({
-            dueDate: { $lt: currentDate },
-            fine: { $exists: false },
-        });
+        const overdueRentals: Rental[] = await RentalModel.find();
 
         for (const rental of overdueRentals) {
             if (rental.isPending || !rental.dueDate || !rental.borrowDate)
@@ -28,8 +25,8 @@ export async function calculateFines(): Promise<void> {
             if (overdueDays <= 0) continue;
 
             const fineAmount: number = calculateFine(
-                currentDate,
-                rental.dueDate
+                rental.dueDate,
+                currentDate
             );
 
             rental.fine = fineAmount;
