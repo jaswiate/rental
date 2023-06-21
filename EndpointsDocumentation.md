@@ -200,3 +200,4 @@
   - Content-Type: application/json
   - Body: Tablica obiektów wypożyczeń użytkownika.
 </details>
+(kliknij aby rozwinąć)
