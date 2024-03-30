@@ -13,7 +13,7 @@ Project for Databases course at AGH UST.
 MongoDB (MongoDB Atlas, Mongoose.js), Node.js (TypeScript, Express, JWT, bcrypt.js), React (TypeScript, Chakra UI)
 
 ## Database Schema:
-We used a NoSql database, so our schema took form of 3 MongoDB collections:
+We used a NoSQL database, so our schema took form of 3 MongoDB collections:
 ### Rental
 ```js
 {
