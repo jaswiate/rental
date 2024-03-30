@@ -1,5 +1,5 @@
 # Virtual Library
-Project for Databases course at AGH UST.
+Web application for managing and using an online library service - a project for the Databases course at AGH UST.
 
 ## Authors:
 - Marcin Żurawel
@@ -10,8 +10,10 @@ Project for Databases course at AGH UST.
 - admin panel for managing rentals and pending shipment requests
 
 ## Technologies:
-MongoDB (MongoDB Atlas, Mongoose.js), Node.js (TypeScript, Express, JWT, bcrypt.js), React (TypeScript, Chakra UI)
-
+- **Frontend:** TypeScript, React, Chakra UI
+- **Backend:** TypeScript, Express, JWT, bcrypt.js, Mongoose.js
+- **Database:** MongoDB, MongoDB Atlas
+  
 ## Database Schema:
 We used a NoSQL database, so our schema took form of 3 MongoDB collections:
 ### Rental
@@ -50,60 +52,7 @@ We used a NoSQL database, so our schema took form of 3 MongoDB collections:
     imageUrl?: string,
 }
 ```
-## API endpoints
 
-# Virtual Library
-Project for Databases course at AGH UST
-
-## Authors:
-- Marcin Żurawel
-- Kuba Świątek
-
-## Key features:
-- browsing and renting resources from the library
-- admin panel for managing rentals and pending shipment requests
-
-## Technologies:
-MongoDB (MongoDB Atlas, Mongoose.js), Node.js (TypeScript, Express, JWT, bcrypt.js), React (TypeScript, Chakra UI)
-
-## Database Schema:
-We used a NoSql database, so our schema took form of 3 MongoDB collections:
-### Rental
-```js
-{
-    _id: string,
-    clientId: User_id,
-    productId: Product_id,
-    productName: string,
-    quantity: number,
-    isPending: boolean,
-    address: { street: string, zipCode: string, city: string },
-    borrowDate?: Date,
-    dueDate?: Date,
-    returnDate?: Date,
-    fine?: number,
-    ifProlonged?: boolean,
-}
-```
-### User
-```js
-{
-    _id: string,
-    username: string,
-    password: string,
-    role: "admin" | "user",
-}
-```
-### Product
-```js
-{
-    _id: string,
-    name: string,
-    description?: string,
-    quantity: number,
-    imageUrl?: string,
-}
-```
 ## API endpoints
 
 ### Rentals
